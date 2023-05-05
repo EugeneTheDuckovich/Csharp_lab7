@@ -1,0 +1,73 @@
+﻿<Page x:Class="AudioLibrary.Pages.AuthorsAndJenresPage"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:local="clr-namespace:AudioLibrary.Pages"
+      mc:Ignorable="d" 
+      d:DesignHeight="450" d:DesignWidth="800"
+      Title="AuthorsAndJenresPage">
+    <Page.Resources>
+        <ResourceDictionary Source="../ResourceDictionaries/AudioLibraryResources.xaml" />       
+    </Page.Resources>
+
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="auto"/>
+            <ColumnDefinition Width="25"/>
+            <ColumnDefinition Width="auto"/>
+            <ColumnDefinition Width="*"/>
+        </Grid.ColumnDefinitions>
+
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="auto"/>
+        </Grid.RowDefinitions>
+        
+
+        <DockPanel Grid.Column="0">
+            <TextBlock Style="{StaticResource HeaderText}" Grid.Column="1">Jenres</TextBlock>
+            <DataGrid ItemsSource="{Binding Jenres}" Width="150">
+                <DataGrid.Columns>
+                    <DataGridTextColumn Width="*" Header="Name" Binding="{Binding Name}" />
+                </DataGrid.Columns>
+            </DataGrid>
+        </DockPanel>
+        
+        <DockPanel Grid.Column="2">
+            <TextBlock Style="{StaticResource HeaderText}" Grid.Column="3">Authors</TextBlock>
+            <DataGrid ItemsSource="{Binding Authors}" Width="300" >
+                <DataGrid.Columns>
+                    <DataGridTextColumn Width="*" Header="Name" Binding="{Binding Name}" />
+                    <DataGridTextColumn Width="*" Header="Year" Binding="{Binding Year, ValidatesOnExceptions=True}"/>
+                </DataGrid.Columns>
+            </DataGrid>            
+        </DockPanel>
+
+        
+        <StackPanel Grid.Row="1" Grid.Column="0"  Margin="0,10,0,10">
+            <TextBlock Style="{StaticResource InputHeader}">Jenre Name:</TextBlock>
+            <TextBox Text="{Binding Path=NewJenre.Name, UpdateSourceTrigger=PropertyChanged}"></TextBox>
+            <Button Command="{Binding DataContext.AddJenreCommand, 
+            RelativeSource={RelativeSource AncestorType=Page}}">add new Jenre</Button>
+        </StackPanel>
+        
+        <StackPanel Grid.Row="1" Grid.Column="2" Margin="0,10,0,10">
+            <StackPanel Orientation="Horizontal">
+                <StackPanel>
+                    <TextBlock Style="{StaticResource InputHeader}">Name:</TextBlock>
+                    <TextBox Text="{Binding Path=NewAuthor.Name, UpdateSourceTrigger=PropertyChanged}"></TextBox>
+                </StackPanel>
+                <StackPanel>
+                    <TextBlock Style="{StaticResource InputHeader}">Year:</TextBlock>
+                    <TextBox Text="{Binding Path=NewAuthor.Year, UpdateSourceTrigger=PropertyChanged}"></TextBox>
+                </StackPanel>
+            </StackPanel>
+            <Button Command="{Binding DataContext.AddAuthorCommand, 
+                RelativeSource={RelativeSource AncestorType=Page}}">add new author</Button>
+        </StackPanel>
+
+        <Button Grid.Column="3" Height="30" Width="150" VerticalAlignment="Top" HorizontalAlignment="Right"
+                Command="{Binding GoToSongsPageCommand}">Return to songs page</Button>
+    </Grid>
+</Page>
